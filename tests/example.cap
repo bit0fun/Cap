@@ -1,0 +1,202 @@
+/* for telling linker where to get other symbols */
+#incdef	 "/usr/include/lang"	/* telling linker where to find standard includes if different */
+#include "relative_file_path"
+#include <std_file_path>
+
+/* define a symbol for the compiler to define outright */
+#sym	EXAMPLE_SYMBOL	8
+#macro  EXAMPLE_MACRO1 ( X ) X+2
+#macro  EXAMPLE_MACRO2	2+2
+
+/* Comments like C, with C++ comments */
+
+/* example Creation of types */
+typedef uint8_t 1 u
+
+/*
+ * typedef name num spec
+ * name: 	name of type
+ * num:		number of memory units (bytes, usually)
+ * spec:	special flags
+ *
+ * Flags:
+ *	a	memory address (for pointer)
+ *	r	register
+ *	u	unsigned (signed by default)
+ *	p	protected (for multithreaded)
+ *	ex	end defined (x denotes number of memory units)
+ *  io	denotes peripheral access, such as I/O
+ *
+ * Note: flags can stack, just need ',' as separator
+ */
+
+
+/* included types (no need for includes) */
+void		// absent type						memory address size
+
+int			// signed integer, 					4 bytes
+dint		// signed integer, 					8 bytes (double int)
+qint		// signed integer, 					16 bytes (quad int)
+
+char		// unsigned integer, 				1 byte
+string		// pointer to char no termination,	memory address size
+
+float		// floating point signal precision
+dfloat		// floating point double precision
+qfloat		// floating point quad precision
+
+/* arrays */
+int[4] name
+
+string_c4 s4						/* string type with 4 characters */
+char[4] char_array = s4				/* initialize char_array to point at string
+								 	 * it is another pointer that holds the same addres
+								 	 */
+char[4] char_array2
+char_array2 = ( char[4] ) s4 		/* Typecasting to type of same size is allowed.
+								 	 * allindecies are copied. Two different arrays 
+									 * are created */
+
+/* Note: arrays and pointers are the same. array indexing */
+
+
+/* Address uses (Pointers) */
+
+p_int example_ptr 	=>   example 	/* create pointer to 'example' */
+p_int example_ptr	= ( >example )	/* create pointer to 'example' */
+int value 			= @example 		/* Getting value from address 'example' */
+
+
+/* structure */
+struct ex_name {
+	int item1
+	int item2
+	int item3
+}
+
+/* unions */
+union ex_name {
+	int int_item
+	char[4] char_array
+}
+
+
+/* type modifiers */
+global 			// can be accessable from any file; used with 'extern'
+extern			// used to access variables defined in other files. used with 'global'
+inline			// function call is stripped; essentially no scope change
+static			// variable value is retained through calls, and preserves scope
+private			// function is hidden from other files
+register		// forces use of register for that variable
+thread_local	// copy of variable is used for each thread. no sharing allowed
+
+
+/* operators and examples */
+
+/* addition */
+c   =  a + b
+c  +=  a
+
+/* subtraction */
+c   =  a - b
+c  -=  a
+
+/* multiplication */
+c   =  a * b
+c  *=  a
+
+/* division */
+c	=  a / b
+c 	/=  a
+
+/* modulo */
+c   =  a % b
+c  %=  a
+
+/* shifting */
+c   =  a << b		/* logical shift left */
+c <<=  a
+c	=  a >> b		/* logical shift right */
+c >>=  a
+c	=  a <<< b		/* arithmetic shift left */
+c	=  a >>> b		/* arithmetic shift right */
+
+/* logical and */
+c	=  a && b
+c &&=  a
+
+/* logical or */
+c	=  a || b
+c ||=  a
+
+/* logical not */
+c	= !a
+
+/* bitwise and */
+c 	=  a & b
+c  &=  a
+
+/* bitwise or */
+c	=  a | b
+c  |=  a
+
+/* bitwise xor */
+c	=  a ^ b
+c  ^=  a
+
+/* bitwise not */
+c	= ~a
+c  ~=  a
+
+/* sizeof operator; returns the size of a variable, or type, in bytes */
+b = sizeof( a )
+b = sizeof( dint )
+
+/* conditionals */
+a >  b 	// a is greater than b
+a >= b	// a is greater than  or equal to b
+a <  b  // a is less than b
+a <= b	// a is less than or equal to b
+a == b	// a is equal to b
+a != b	// a is not equal to b
+
+/* if statements */
+if ( 'conditional' ) {
+
+} else if ( 'conditional' ) {
+
+} else {
+
+}
+
+/* loops */
+
+/* for loop */
+for( 'counter with initial value'; 'conditional'; 'counter modifier' ){
+
+}
+
+/* specific for loop for accesssing arrays */
+afor( 'array'; 'start index','end index'; 'index method'){
+
+}
+
+/* while loop */
+while( 'conditional' ){
+
+}
+
+/* do while loop. always executes at least once */
+do{
+
+
+} while( 'conditional' )
+
+
+/* functions */
+'return_type' funct_name( 'arguments' ){
+
+}
+
+/* miscellaneous */
+
